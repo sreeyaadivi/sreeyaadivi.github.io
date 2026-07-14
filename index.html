@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adivi Sri Lakshmi Sreeya | AI & ML Developer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg1: #0d0d1a;
+      --bg2: #11112a;
+      --glass: rgba(255,255,255,0.05);
+      --glass-border: rgba(255,255,255,0.12);
+      --glass-hover: rgba(255,255,255,0.09);
+      --accent: #a78bfa;
+      --accent2: #7c3aed;
+      --teal: #67e8f9;
+      --white: #f1f5f9;
+      --muted: #94a3b8;
+      --mono: 'Fira Code', monospace;
+      --sans: 'Inter', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg1);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* Animated background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 10%, rgba(124,58,237,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 80% 80%, rgba(103,232,249,0.12) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 40% at 60% 30%, rgba(167,139,250,0.08) 0%, transparent 50%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2.5rem;
+      height: 68px;
+      background: rgba(13,13,26,0.6);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--teal); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+      letter-spacing: 0.04em;
+    }
+    .nav-links a:nth-child(1)::before { content: "01. "; color: var(--accent); }
+    .nav-links a:nth-child(2)::before { content: "02. "; color: var(--accent); }
+    .nav-links a:nth-child(3)::before { content: "03. "; color: var(--accent); }
+    .nav-links a:nth-child(4)::before { content: "04. "; color: var(--accent); }
+    .nav-links a:hover { color: var(--accent); }
+
+    .nav-cta {
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 0.5rem 1.25rem;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      border-radius: 6px;
+      text-decoration: none;
+      background: rgba(167,139,250,0.07);
+      backdrop-filter: blur(8px);
+      transition: all 0.2s;
+    }
+    .nav-cta:hover { background: rgba(167,139,250,0.18); color: #fff; }
+
+    /* Hamburger */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--muted); border-radius: 2px; transition: all 0.3s; }
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 68px; left: 0; right: 0;
+      background: rgba(13,13,26,0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+      z-index: 999;
+      flex-direction: column;
+      padding: 1.5rem 2rem;
+      gap: 1.25rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: var(--mono);
+      font-size: 14px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .mobile-menu a:hover { color: var(--accent); }
+
+    /* Sections */
+    section {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 6rem 2rem;
+    }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 68px;
+      max-width: 900px;
+      margin: 0 auto;
+      padding-left: 2rem;
+      padding-right: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-greeting {
+      font-family: var(--mono);
+      font-size: 15px;
+      color: var(--teal);
+      margin-bottom: 1.25rem;
+      letter-spacing: 0.04em;
+    }
+
+    .hero-name {
+      font-size: clamp(2.4rem, 6vw, 4.5rem);
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.025em;
+      line-height: 1.05;
+      margin-bottom: 0.25rem;
+    }
+
+    .hero-tagline {
+      font-size: clamp(1.6rem, 4vw, 3rem);
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: -0.02em;
+      margin-bottom: 1.75rem;
+      line-height: 1.15;
+    }
+
+    .hero-desc {
+      max-width: 540px;
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.8;
+      font-weight: 300;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-desc a { color: var(--accent); text-decoration: none; }
+
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn-glass {
+      font-family: var(--mono);
+      font-size: 13px;
+      padding: 0.8rem 1.75rem;
+      border-radius: 8px;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.25s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, rgba(167,139,250,0.25), rgba(124,58,237,0.2));
+      border: 1px solid rgba(167,139,250,0.5);
+      color: var(--accent);
+      backdrop-filter: blur(12px);
+    }
+    .btn-primary:hover {
+      background: linear-gradient(135deg, rgba(167,139,250,0.4), rgba(124,58,237,0.35));
+      border-color: var(--accent);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+    .btn-outline {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--glass-border);
+      color: var(--muted);
+      backdrop-filter: blur(12px);
+    }
+    .btn-outline:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: var(--teal);
+      color: var(--teal);
+      transform: translateY(-2px);
+    }
+
+
+
+    /* Section heading */
+    .sec-head {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+    .sec-head h2 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--white);
+      white-space: nowrap;
+    }
+    .sec-head h2 .n { font-family: var(--mono); color: var(--accent); margin-right: 0.35rem; font-size: 1.1rem; }
+    .sec-head::after {
+      content: '';
+      display: block;
+      height: 1px;
+      background: linear-gradient(to right, var(--glass-border), transparent);
+      width: 100%;
+    }
+
+    /* Glass card */
+    .glass-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      transition: all 0.25s;
+    }
+    .glass-card:hover {
+      background: var(--glass-hover);
+      border-color: rgba(167,139,250,0.3);
+      transform: translateY(-3px);
+    }
+
+    /* ABOUT */
+    #about .about-grid {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      gap: 2.5rem;
+      align-items: start;
+    }
+    .about-text p {
+      color: var(--muted);
+      margin-bottom: 1rem;
+      line-height: 1.85;
+      font-weight: 300;
+      font-size: 0.97rem;
+    }
+    .about-text p a { color: var(--accent); text-decoration: none; }
+    .about-list { list-style: none; margin-top: 1.25rem; display: grid; grid-template-columns: 1fr 1fr; gap: 0.3rem; }
+    .about-list li {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .about-list li::before { content: "▹"; color: var(--accent); font-size: 10px; flex-shrink: 0; }
+    .stat-cards { display: flex; flex-direction: column; gap: 1rem; }
+    .stat-card {
+      padding: 1.25rem;
+      text-align: center;
+    }
+    .stat-card .big {
+      font-family: var(--mono);
+      font-size: 2.25rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), var(--teal));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-card .sm { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+
+    /* SKILLS */
+    #skills .skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+    .skill-card { padding: 1.5rem; }
+    .skill-title {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--teal);
+      margin-bottom: 1rem;
+      letter-spacing: 0.06em;
+    }
+    .chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .chip {
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 4px;
+      border: 1px solid rgba(167,139,250,0.25);
+      color: var(--muted);
+      background: rgba(167,139,250,0.06);
+      transition: all 0.2s;
+    }
+    .chip:hover { border-color: var(--accent); color: var(--accent); }
+    .chip.star { border-color: rgba(103,232,249,0.35); color: var(--teal); background: rgba(103,232,249,0.06); }
+
+    /* PROJECTS */
+    #projects .proj-grid { display: flex; flex-direction: column; gap: 1.25rem; }
+    .proj-card { padding: 1.75rem; position: relative; top: 0; }
+    .proj-card:hover { top: -4px; }
+    .proj-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1.1rem;
+    }
+    .proj-icon { font-size: 1.5rem; }
+    .proj-actions { display: flex; align-items: center; gap: 0.75rem; }
+    .pub-badge {
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: 3px 8px;
+      border: 1px solid rgba(103,232,249,0.4);
+      color: var(--teal);
+      border-radius: 4px;
+      background: rgba(103,232,249,0.06);
+    }
+    .proj-link {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .proj-link:hover { color: var(--accent); }
+    .proj-title { font-size: 1.1rem; font-weight: 600; color: var(--white); margin-bottom: 0.6rem; }
+    .proj-desc { font-size: 13px; color: var(--muted); line-height: 1.75; font-weight: 300; margin-bottom: 1.25rem; }
+    .proj-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+    .proj-tags span { font-family: var(--mono); font-size: 11px; color: var(--accent); }
+
+    /* EDUCATION */
+    #education .edu-list { display: flex; flex-direction: column; gap: 0; }
+    .edu-row {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 1rem;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .edu-row:last-child { border-bottom: none; }
+    .edu-yr { font-family: var(--mono); font-size: 11px; color: var(--accent); padding-top: 3px; }
+    .edu-role { font-size: 0.95rem; font-weight: 500; color: var(--white); margin-bottom: 3px; }
+    .edu-place { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-bottom: 0.5rem; }
+    .edu-pts { list-style: none; }
+    .edu-pts li { font-size: 12px; color: var(--muted); padding: 0.15rem 0 0.15rem 1rem; position: relative; font-weight: 300; }
+    .edu-pts li::before { content: "▹"; color: var(--accent); position: absolute; left: 0; font-size: 10px; top: 4px; }
+
+    .cert-section { margin-top: 3rem; }
+    .cert-label { font-family: var(--mono); font-size: 12px; color: var(--teal); margin-bottom: 1rem; }
+    .cert-grid { display: flex; flex-direction: column; gap: 0.75rem; }
+    .cert-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.25rem;
+    }
+    .cert-name { font-size: 13px; color: var(--white); font-weight: 400; }
+    .cert-org { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .cert-check { font-family: var(--mono); font-size: 10px; color: var(--teal); }
+
+    /* CONTACT */
+    #contact {
+      text-align: center;
+      padding: 6rem 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .contact-num { font-family: var(--mono); font-size: 13px; color: var(--accent); margin-bottom: 1rem; }
+    .contact-title { font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: var(--white); margin-bottom: 1.25rem; letter-spacing: -0.02em; }
+    .contact-desc { max-width: 500px; margin: 0 auto 2.5rem; color: var(--muted); line-height: 1.8; font-weight: 300; }
+    .contact-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-bottom: 3rem; }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0.65rem 1.25rem;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+    .contact-link:hover { color: var(--accent); border-color: var(--accent) !important; background: rgba(167,139,250,0.08) !important; }
+    .contact-link svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      border-top: 1px solid var(--glass-border);
+      position: relative;
+      z-index: 1;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    /* Scroll reveal */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 700px) {
+      nav { padding: 0 1.25rem; }
+      .nav-links { display: none; }
+      .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      section { padding: 4.5rem 1.25rem; }
+      #hero { padding-left: 1.25rem; padding-right: 1.25rem; }
+      #about .about-grid { grid-template-columns: 1fr; }
+      .stat-cards { flex-direction: row; flex-wrap: wrap; }
+      #skills .skills-grid { grid-template-columns: 1fr; }
+      .about-list { grid-template-columns: 1fr; }
+      .hero-stats { gap: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#hero"><span>&lt;</span>Sreeya<span>/&gt;</span></a>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#education">Education</a>
+  </div>
+  <a class="nav-cta" href="mailto:sreeyaadivi@gmail.com">Say Hello</a>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="closeMenu()">01. About</a>
+  <a href="#skills" onclick="closeMenu()">02. Skills</a>
+  <a href="#projects" onclick="closeMenu()">03. Projects</a>
+  <a href="#education" onclick="closeMenu()">04. Education</a>
+  <a href="mailto:sreeyaadivi@gmail.com">Say Hello</a>
+</div>
+
+<!-- HERO -->
+<div id="hero">
+  <p class="hero-greeting">Hi, my name is</p>
+  <h1 class="hero-name">Adivi Sri Lakshmi Sreeya.</h1>
+  <h2 class="hero-tagline">I build things with AI.</h2>
+  <p class="hero-desc">
+    I'm a CS Engineering student specialising in <a href="#skills">Artificial Intelligence & Machine Learning</a> at SCSVMV University. I love building intelligent systems — from digitising ancient temple inscriptions to real-time computer vision pipelines.
+  </p>
+  <div class="hero-btns">
+    <a class="btn-glass btn-primary" href="#projects">Check out my work</a>
+    <a class="btn-glass btn-outline" href="mailto:sreeyaadivi@gmail.com">Get in touch</a>
+  </div>
+
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="sec-head reveal"><h2><span class="n">01.</span> About Me</h2></div>
+  <div class="about-grid reveal">
+    <div class="about-text">
+      <p>Hello! I'm Sreeya, a final-year Computer Science student specialising in <a href="#skills">AI & ML</a> at SCSVMV University, graduating in 2026 with a 9.28 CGPA.</p>
+      <p>My journey into AI started with building a face mask detection system, which sparked a deep interest in computer vision. That led to ShilpaSmriti — a multimodal AI project to digitally preserve ancient temple inscriptions, which got published in a peer-reviewed journal.</p>
+      <p>I care about building systems that are both technically rigorous and genuinely useful. Currently open to entry-level roles in AI/ML, data science, and full-stack development.</p>
+      <ul class="about-list">
+        <li>Computer Vision</li>
+        <li>Deep Learning</li>
+        <li>Natural Language Processing</li>
+        <li>React + TypeScript</li>
+        <li>Gemini API / OCR</li>
+        <li>Python & OpenCV</li>
+      </ul>
+    </div>
+    <div class="stat-cards">
+      <div class="glass-card stat-card"><div class="big">9.28</div><div class="sm">CGPA</div></div>
+      <div class="glass-card stat-card"><div class="big">3</div><div class="sm">AI Projects</div></div>
+      <div class="glass-card stat-card"><div class="big">2</div><div class="sm">Publications</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="sec-head reveal"><h2><span class="n">02.</span> Skills</h2></div>
+  <div class="skills-grid reveal">
+    <div class="glass-card skill-card">
+      <div class="skill-title">// languages</div>
+      <div class="chips">
+        <span class="chip star">Python</span>
+        <span class="chip">C++</span>
+        <span class="chip">Java</span>
+        <span class="chip">SQL</span>
+      </div>
+    </div>
+    <div class="glass-card skill-card">
+      <div class="skill-title">// ai & machine learning</div>
+      <div class="chips">
+        <span class="chip star">Machine Learning</span>
+        <span class="chip star">Computer Vision</span>
+        <span class="chip">NLP</span>
+        <span class="chip star">OpenCV</span>
+        <span class="chip">MobileNetV2</span>
+        <span class="chip">Deep Learning</span>
+      </div>
+    </div>
+    <div class="glass-card skill-card">
+      <div class="skill-title">// frontend</div>
+      <div class="chips">
+        <span class="chip star">React</span>
+        <span class="chip star">TypeScript</span>
+        <span class="chip">JavaScript</span>
+        <span class="chip">HTML5</span>
+        <span class="chip">CSS3</span>
+      </div>
+    </div>
+    <div class="glass-card skill-card">
+      <div class="skill-title">// data & tools</div>
+      <div class="chips">
+        <span class="chip">Power BI</span>
+        <span class="chip">Matplotlib</span>
+        <span class="chip">Git</span>
+        <span class="chip">MySQL</span>
+        <span class="chip">Jupyter</span>
+        <span class="chip">Excel</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="sec-head reveal"><h2><span class="n">03.</span> Projects</h2></div>
+  <div class="proj-grid">
+
+    <div class="glass-card proj-card reveal">
+      <div class="proj-top">
+        <span class="proj-icon">🗿</span>
+        <div class="proj-actions">
+          <span class="pub-badge">[ published ]</span>
+          <a class="proj-link" href="https://github.com/sreeyaadivi" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            GitHub ↗
+          </a>
+        </div>
+      </div>
+      <div class="proj-title">ShilpaSmriti</div>
+      <div class="proj-desc">
+        AI-based web application for digital preservation and translation of ancient temple inscriptions. Utilises Google Gemini API for multimodal OCR and contextual translation in a single pipeline — reducing manual interpretation effort significantly. Published in Journal of Advance and Future Research, 2026.
+      </div>
+      <div class="proj-tags">
+        <span>React</span><span>·</span><span>TypeScript</span><span>·</span><span>Gemini API</span><span>·</span><span>OCR</span><span>·</span><span>REST APIs</span>
+      </div>
+    </div>
+
+    <div class="glass-card proj-card reveal">
+      <div class="proj-top">
+        <span class="proj-icon">🧘</span>
+        <div class="proj-actions">
+          <a class="proj-link" href="https://github.com/sreeyaadivi" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            GitHub ↗
+          </a>
+        </div>
+      </div>
+      <div class="proj-title">YogaArogya</div>
+      <div class="proj-desc">
+        Yoga and wellness platform that generates personalised asana recommendations based on user health conditions. Built with a dynamic questionnaire system and a modern, responsive UI to enhance usability and user experience.
+      </div>
+      <div class="proj-tags">
+        <span>React</span><span>·</span><span>TypeScript</span><span>·</span><span>JavaScript</span><span>·</span><span>HTML</span><span>·</span><span>CSS</span>
+      </div>
+    </div>
+
+    <div class="glass-card proj-card reveal">
+      <div class="proj-top">
+        <span class="proj-icon">😷</span>
+        <div class="proj-actions">
+          <span class="pub-badge">[ published ]</span>
+          <a class="proj-link" href="https://github.com/sreeyaadivi" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            GitHub ↗
+          </a>
+        </div>
+      </div>
+      <div class="proj-title">Face Mask Detection System</div>
+      <div class="proj-desc">
+        Real-time face mask detection using OpenCV DNN and MobileNetV2. Webcam-based live detection with bounding boxes and confidence scoring, with optimised image preprocessing for fast real-time inference. Published in Journal of Advance and Future Research, 2025.
+      </div>
+      <div class="proj-tags">
+        <span>Python</span><span>·</span><span>OpenCV</span><span>·</span><span>MobileNetV2</span><span>·</span><span>Deep Learning</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="sec-head reveal"><h2><span class="n">04.</span> Education & Certifications</h2></div>
+  <div class="edu-list reveal">
+    <div class="edu-row">
+      <div class="edu-yr">2022–2026</div>
+      <div>
+        <div class="edu-role">B.E. Computer Science & Engineering (AI & ML)</div>
+        <div class="edu-place">SCSVMV University, Kanchipuram, Tamil Nadu · CGPA: 9.28</div>
+        <ul class="edu-pts">
+          <li>Specialisation in Artificial Intelligence and Machine Learning</li>
+          <li>Published 2 research papers in Journal of Advance and Future Research</li>
+        </ul>
+      </div>
+    </div>
+    <div class="edu-row">
+      <div class="edu-yr">2020–2022</div>
+      <div>
+        <div class="edu-role">Intermediate (MPC)</div>
+        <div class="edu-place">Sri Chaitanya Jr Kalasala, Hyderabad, Telangana · 95%</div>
+      </div>
+    </div>
+    <div class="edu-row">
+      <div class="edu-yr">2020</div>
+      <div>
+        <div class="edu-role">Secondary School (Class X)</div>
+        <div class="edu-place">Bharatiya Vidya Bhavan's Vidyashram, Hyderabad · 88.6%</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cert-section reveal">
+    <div class="cert-label">// certifications</div>
+    <div class="cert-grid">
+      <div class="glass-card cert-item">
+        <div>
+          <div class="cert-name">Big Data Computing</div>
+          <div class="cert-org">NPTEL · IIT Patna</div>
+        </div>
+        <div class="cert-check">✓ verified</div>
+      </div>
+      <div class="glass-card cert-item">
+        <div>
+          <div class="cert-name">Data Science Job Simulation</div>
+          <div class="cert-org">British Airways · Forage</div>
+        </div>
+        <div class="cert-check">✓ verified</div>
+      </div>
+      <div class="glass-card cert-item">
+        <div>
+          <div class="cert-name">Data Analytics Job Simulation</div>
+          <div class="cert-org">Deloitte Australia · Forage</div>
+        </div>
+        <div class="cert-check">✓ verified</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div id="contact">
+  <p class="contact-num">05. What's next?</p>
+  <h2 class="contact-title">Get In Touch</h2>
+  <p class="contact-desc">
+    I'm currently looking for new opportunities in AI/ML, data science, and full-stack development. Whether you have a question, a project idea, or just want to say hi — my inbox is always open!
+  </p>
+  <a class="btn-glass btn-primary" href="mailto:sreeyaadivi@gmail.com" style="display:inline-block;margin-bottom:2.5rem;font-size:14px;padding:0.9rem 2rem;">Say Hello ✉</a>
+  <div class="contact-links">
+    <a class="glass-card contact-link" href="mailto:sreeyaadivi@gmail.com" style="border-color:var(--glass-border);">
+      <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      sreeyaadivi@gmail.com
+    </a>
+    <a class="glass-card contact-link" href="https://github.com/sreeyaadivi" target="_blank" style="border-color:var(--glass-border);">
+      <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+      github/sreeyaadivi
+    </a>
+    <a class="glass-card contact-link" href="https://linkedin.com/in/sreeyaadivi" target="_blank" style="border-color:var(--glass-border);">
+      <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+      linkedin/sreeyaadivi
+    </a>
+    <a class="glass-card contact-link" href="tel:+918520046991" style="border-color:var(--glass-border);">
+      <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      +91 85200 46991
+    </a>
+  </div>
+</div>
+
+<footer>
+  Designed &amp; Built by <a href="#">Adivi Sri Lakshmi Sreeya</a>
+</footer>
+
+<script>
+  // Mobile menu
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+  function closeMenu() {
+    document.getElementById('mobileMenu').classList.remove('open');
+  }
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Active nav highlight
+  const sections = document.querySelectorAll('section, #hero, #contact');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--accent)' : '';
+    });
+  });
+</script>
+</body>
+</html>
